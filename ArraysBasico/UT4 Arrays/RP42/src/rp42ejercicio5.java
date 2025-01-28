@@ -2,11 +2,11 @@ import java.util.Scanner;
 
 public class rp42ejercicio5 {
     public static void main(String[] args) {
-        
+
         // Declarar variables
         String[] palabras = new String[8];
-        String[] colores = {"verde", "rojo", "azul", "amarillo", "naranja", "rosa", "negro", "blanco",
-        "morado"};
+        String[] colores = { "verde", "rojo", "azul", "amarillo", "naranja", "rosa", "negro", "blanco",
+                "morado" };
 
         // Pedir palabras al usuario
         System.out.println(" Ingresa a continuación 8 palabras: ");
@@ -15,7 +15,7 @@ public class rp42ejercicio5 {
         // Ordenar palabras según si son colores o no
         palabras = OrdenarPalabras(palabras, colores);
         // Monstrar palabras reordenadas
-        MostrarPalabras(palabras, colores);
+        MostrarPalabras(palabras);
 
     }
 
@@ -24,28 +24,46 @@ public class rp42ejercicio5 {
         Scanner scanner = new Scanner(System.in);
         for (int i = 0; i < palabras.length; i++) {
             System.out.print("Palabra " + (i + 1) + ": ");
-            palabras[i] = scanner.nextLine();
+            palabras[i] = scanner.nextLine().toLowerCase();
         }
-
         scanner.close();
     }
 
-    // Función que reordena las palabras
-    public static void OrdenarPalabras(String[] palabras, String[] colores) {
-        boolean esColor = false;
-        String guardarColor = "";
-        String guardarResto = "";
-        while (esColor) {
-            for (int i = 0; i < palabras.length; i++) {
-                if (palabras[i].equals(colores[i])) {
-                    guardarColor = palabras[i];
+    public static String[] OrdenarPalabras(String[] palabras, String[] colores) {
+        String[] arrayOrdenado = new String[palabras.length];
+        int indiceColores = 0;
+        int indiceResto = palabras.length -1;
+
+        for (int i = 0; i < palabras.length; i++) {
+            boolean esColor = false;
+
+            for (int j = 0; j < colores.length; j++) {
+                if (palabras[i].equals(colores[j])) {
                     esColor = true;
+                    break;
                 }
-                else {
-                    guardarResto = palabras[i + 1];
-                }
-            } 
+            }
+
+            if (esColor) {
+                arrayOrdenado[indiceColores] = palabras[i];
+                indiceColores++;
+            } else {
+                arrayOrdenado[indiceResto] = palabras[i];
+                indiceResto--;
+            }
         }
+
+        return arrayOrdenado;
+
+    }
+
+    public static void MostrarPalabras(String[] palabras) {
+        System.out.println("\nPalabras reordenadas:");
+        for (int i = 0; i < palabras.length; i++) {
+            System.out.println(palabras[i] + " ");
+        }
+
+        System.out.println();
     }
 
 }
